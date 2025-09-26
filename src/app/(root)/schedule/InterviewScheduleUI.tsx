@@ -29,11 +29,17 @@ import MeetingCard from "@/components/MeetingCard";
 
 function InterviewScheduleUI() {
   const client = useStreamVideoClient();
-  const { user } = useUser();
+  const { user,isLoaded } = useUser();
   const [open, setOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
-  const interviews = useQuery(api.interviews.getAllInterviews) ?? [];
+  //const interviews = useQuery(api.interviews.getAllInterviews) ?? [];
+  //const { isLoaded, userId } = useUser();
+
+const interviews = useQuery(
+  api.interviews.getAllInterviews,
+  isLoaded && user ? {} : "skip"
+) ?? [];
   const users = useQuery(api.users.getUsers) ?? [];
   const createInterview = useMutation(api.interviews.createInterview);
 

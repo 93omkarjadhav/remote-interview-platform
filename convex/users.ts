@@ -26,9 +26,13 @@ export const syncUser = mutation({
 export const getUsers = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error("User is not authenticated");
+        console.log("🔑 Identity from Clerk:", identity);   // 👈 log here
 
+    //if (!identity) throw new Error("User is not authenticated");
+   if (!identity) return [];
     const users = await ctx.db.query("users").collect();
+        console.log("🔑 Identity from Clerk:", identity);   // 👈 log here
+
 
     return users;
   },
